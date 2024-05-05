@@ -12,7 +12,7 @@
             <div><input type="checkbox" v-model="t.completed" class="form-check-input" />{{ t.completed }}</div>
           </div>
           <input type="checkbox" v-model="hide" class="form-check-input">
-          <label for="">Afficher / Cacher </label>
+          <label for=""> <span class="badge bg-primary">Afficher</span> / Cacher les tasks accomplis</label>
         </div>
       </div>
     </div>
