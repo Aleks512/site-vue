@@ -3,16 +3,33 @@
     <div class="container mt-5">
       <div class="row justify-content-md-center">
         <div class="col-md-8 bg-white p-3">
-          <h1 class="text-center">Bienvenue dans application Todo de {{ name }} !</h1>
+          <h1 class="text-center">Bienvenue dans l'application Todo de {{ name }} !</h1>
           <p>Ceci est un exemple de contenu pour tester l'affichage de votre application.</p>
           <hr>
-          <div class="d-flex align-items-center justify-content-between px-3 py-2" v-for="t in hiddentasks"
-            :key="t.task">
-            <div>{{ t.task }}</div>
-            <div><input type="checkbox" v-model="t.completed" class="form-check-input" />{{ t.completed }}</div>
+
+          <!-- Modifications -->
+          <div class="d-flex align-items-center py-2">
+            <input v-model="newItemText" class="form-control flex-grow-1">
+            <button class="btn btn-primary ms-2" v-on:click="addNewToDO">Ajouter</button>
           </div>
-          <input type="checkbox" v-model="hide" class="form-check-input">
-          <label for=""> <span class="badge bg-primary">Afficher</span> / Cacher les tasks accomplis</label>
+
+          <hr>
+          <div class="d-flex align-items-center justify-content-between px-3 py-2" v-for="t in hiddentasks" :key="t.task">
+            <div>{{ t.task }}</div>
+            <div>
+              <input type="checkbox" v-model="t.completed" class="form-check-input" />
+              {{ t.completed }}
+            </div>
+            
+          </div>
+          <div class="d-flex flex-row-reverse justify-content-between">
+            
+            <input type="checkbox" v-model="hide" class="form-check-input">
+            <label><span class="badge bg-primary">Afficher/Cacher les tasks accomplis</span> </label>
+
+
+          </div>
+
         </div>
       </div>
     </div>
@@ -43,7 +60,7 @@ export default {
   },
   computed: {
     hiddentasks() {
-      return this.hide ? this.tasks.filter(t => !t.completed) : this.tasks 
+      return this.hide ? this.tasks.filter(t => !t.completed) : this.tasks
     }
   }
 };
