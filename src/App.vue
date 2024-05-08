@@ -24,7 +24,7 @@
             <div>{{ t.task }}</div>
             <div>
               <input type="checkbox" v-model="t.completed" class="borders form-check-input" />
-              
+              <button class="btn btn-outline-primary ms-2 btn-sm" v-on:click="deleteToDO">Effacer</button>
             </div>
 
           </div>
@@ -56,9 +56,25 @@ export default {
     addNewToDO() {
       if (this.newItemText.trim()) {
         this.tasks.push({ task: this.newItemText, completed: false });
-        localStorage.setItem('tasksList', JSON.stringify(this.tasks));
+        this.updateLocalStorage();
         this.newItemText = '';
       }
+    },
+    deleteToDO(index) {
+      this.tasks.splice(index, 1);
+      this.updateLocalStorage();
+    },
+    updateLocalStorage() {
+      localStorage.setItem('tasksList', JSON.stringify(this.tasks));
+    }
+  },
+  watch: {
+    // Surveille toute modification dans le tableau tasks
+    tasks: {
+      handler() {
+        this.updateLocalStorage();
+      },
+      deep: true // Surveille les modifications profondes
     }
   },
   created() {
@@ -68,6 +84,7 @@ export default {
     }
   }
 };
+
 </script>
 
 <style>
@@ -85,5 +102,13 @@ h1 {
 .borders {
   border: 0.2px solid rgb(12, 85, 231) !important;
   border-radius: 5px !important;
+}
+
+delete-button {
+  color: white;
+  background-color: red;
+  border: none;
+  border-radius: 5px;
+  
 }
 </style>
