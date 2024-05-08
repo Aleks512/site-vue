@@ -39,6 +39,9 @@
 <script>
 export default {
   name: 'App',
+  /**
+   * @property {AppData} data - The data object of the component.
+   */
   data() {
     return {
       name: 'Aleks',
@@ -48,11 +51,17 @@ export default {
     };
   },
   computed: {
+    /**
+     * @property {Task[]} hiddentasks - The filtered list of tasks based on the hide property.
+     */
     hiddentasks() {
       return this.hide ? this.tasks.filter(t => !t.completed) : this.tasks;
     }
   },
   methods: {
+    /**
+     * Adds a new task to the tasks list.
+     */
     addNewToDO() {
       if (this.newItemText.trim()) {
         this.tasks.push({ task: this.newItemText, completed: false });
@@ -60,24 +69,36 @@ export default {
         this.newItemText = '';
       }
     },
+    /**
+     * Deletes a task from the tasks list.
+     * @param {number} index - The index of the task to be deleted.
+     */
     deleteToDO(index) {
       this.tasks.splice(index, 1);
       this.updateLocalStorage();
     },
+    /**
+     * Updates the local storage with the current tasks list.
+     */
     updateLocalStorage() {
       localStorage.setItem('tasksList', JSON.stringify(this.tasks));
     }
   },
   watch: {
-    // Surveille toute modification dans le tableau tasks
+    /**
+     * Watches for changes in the tasks list and updates the local storage.
+     */
     tasks: {
       handler() {
         this.updateLocalStorage();
       },
-      deep: true // Surveille les modifications profondes
+      deep: true // Watches for deep modifications
     }
   },
   created() {
+    /**
+     * Retrieves the tasks list from the local storage on component creation.
+     */
     let data = localStorage.getItem('tasksList');
     if (data) {
       this.tasks = JSON.parse(data);
